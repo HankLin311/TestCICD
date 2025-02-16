@@ -11,17 +11,21 @@ jobs:
     runs-on: windows-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v3
     
     - name: Setup .NET
-      uses: actions/setup-dotnet@v1
+      uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: '6.0.x'
+        dotnet-version: '8.0.x'  # 改為 .NET 8
         
+    - name: List Directory Content
+      run: |
+        dir
+        dir src /s
+      
     - name: Build
-      run: dotnet build "C:\Users\user\source\repos\TestCICD\src\TestCICD.Web\TestCICD.Web\TestCICD.Web.csproj" --configuration Release
-      working-directory: C:\Users\user\source\repos\TestCICD\src\TestCICD.Web\TestCICD.Web
-
+      run: dotnet build "./src/TestCICD.Web/TestCICD.Web/TestCICD.Web.csproj" --configuration Release
+      
     - name: Test
-      run: dotnet test --no-build
-      working-directory: C:\Users\user\source\repos\TestCICD\src\TestCICD.Web\TestCICD.Web
+      run: dotnet test "./src/TestCICD.Web/TestCICD.Web/TestCICD.Web.csproj" --no-build --configuration Release
