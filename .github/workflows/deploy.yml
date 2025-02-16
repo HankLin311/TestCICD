@@ -21,8 +21,7 @@ jobs:
         
     - name: List Directory Content
       run: |
-        dir
-        dir src /s
+        Get-ChildItem -Path . -Recurse    # PowerShell 命令語法
       
     - name: Build
       run: dotnet build "./src/TestCICD.Web/TestCICD.Web/TestCICD.Web.csproj" --configuration Release
