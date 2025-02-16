@@ -6,48 +6,48 @@ param(
 )
 
 try {
-    Write-Host "¶}©l³¡¸p¬yµ{..." -ForegroundColor Yellow
+    Write-Host "é–‹å§‹éƒ¨ç½²æµç¨‹..." -ForegroundColor Yellow
 
-    # ÀË¬d±M®×ÀÉ¬O§_¦s¦b
+    # æª¢æŸ¥å°ˆæ¡ˆæª”æ˜¯å¦å­˜åœ¨
     if (!(Test-Path $ProjectPath)) {
-        Write-Host "§ä¤£¨ì±M®×ÀÉ: $ProjectPath" -ForegroundColor Red
+        Write-Host "æ‰¾ä¸åˆ°å°ˆæ¡ˆæª”: $ProjectPath" -ForegroundColor Red
         exit 1
     }
 
-    # ÀË¬d IIS ºô¯¸¬O§_¦s¦b
+    # æª¢æŸ¥ IIS ç¶²ç«™æ˜¯å¦å­˜åœ¨
     if (!(Get-Website -Name $WebsiteName)) {
-        Write-Host "ºô¯¸¤£¦s¦b¡A½Ğ¥ı¦b IIS «Ø¥ßºô¯¸" -ForegroundColor Red
+        Write-Host "ç¶²ç«™ä¸å­˜åœ¨ï¼Œè«‹å…ˆåœ¨ IIS å»ºç«‹ç¶²ç«™" -ForegroundColor Red
         exit 1
     }
 
-    # °±¤îºô¯¸
-    Write-Host "°±¤îºô¯¸..." -ForegroundColor Yellow
+    # åœæ­¢ç¶²ç«™
+    Write-Host "åœæ­¢ç¶²ç«™..." -ForegroundColor Yellow
     Stop-Website -Name $WebsiteName
     Stop-WebAppPool -Name $AppPoolName
 
-    # «Ø¸m±M®×
-    Write-Host "«Ø¸m±M®×..." -ForegroundColor Yellow
+    # å»ºç½®å°ˆæ¡ˆ
+    Write-Host "å»ºç½®å°ˆæ¡ˆ..." -ForegroundColor Yellow
     dotnet build $ProjectPath --configuration Release
     if ($LASTEXITCODE -ne 0) {
-        throw "«Ø¸m¥¢±Ñ"
+        throw "å»ºç½®å¤±æ•—"
     }
 
-    # µo¥¬±M®×
-    Write-Host "µo¥¬±M®×..." -ForegroundColor Yellow
+    # ç™¼å¸ƒå°ˆæ¡ˆ
+    Write-Host "ç™¼å¸ƒå°ˆæ¡ˆ..." -ForegroundColor Yellow
     dotnet publish $ProjectPath --configuration Release --output $PhysicalPath
     if ($LASTEXITCODE -ne 0) {
-        throw "µo¥¬¥¢±Ñ"
+        throw "ç™¼å¸ƒå¤±æ•—"
     }
 
-    # ±Ò°ÊÀ³¥Îµ{¦¡¶°°Ï©Mºô¯¸
-    Write-Host "±Ò°Êºô¯¸..." -ForegroundColor Yellow
+    # å•Ÿå‹•æ‡‰ç”¨ç¨‹å¼é›†å€å’Œç¶²ç«™
+    Write-Host "å•Ÿå‹•ç¶²ç«™..." -ForegroundColor Yellow
     Start-WebAppPool -Name $AppPoolName
     Start-Website -Name $WebsiteName
 
-    Write-Host "³¡¸p§¹¦¨¡I" -ForegroundColor Green
-    Write-Host "½Ğ³X°İ: http://localhost:8080" -ForegroundColor Green
+    Write-Host "éƒ¨ç½²å®Œæˆï¼" -ForegroundColor Green
+    Write-Host "è«‹è¨ªå•: http://localhost:8080" -ForegroundColor Green
 }
 catch {
-    Write-Host "³¡¸p¹Lµ{µo¥Í¿ù»~: $_" -ForegroundColor Red
+    Write-Host "éƒ¨ç½²éç¨‹ç™¼ç”ŸéŒ¯èª¤: $_" -ForegroundColor Red
     exit 1
 }
