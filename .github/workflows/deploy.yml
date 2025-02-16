@@ -19,7 +19,9 @@ jobs:
         dotnet-version: '6.0.x'
         
     - name: Build
-      run: dotnet build --configuration Release
+      run: dotnet build "C:\Users\user\source\repos\TestCICD\src\TestCICD.Web\TestCICD.Web\TestCICD.Web.csproj" --configuration Release
+      working-directory: C:\Users\user\source\repos\TestCICD\src\TestCICD.Web\TestCICD.Web
 
     - name: Test
       run: dotnet test --no-build
+      working-directory: C:\Users\user\source\repos\TestCICD\src\TestCICD.Web\TestCICD.Web
